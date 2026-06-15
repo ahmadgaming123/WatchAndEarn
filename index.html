@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WatchAndEarn — Watch Ads & Earn Real Rewards</title>
+  <meta name="description" content="Watch short ads and earn coins redeemable for PUBG UC and Free Fire Diamonds. Download WatchAndEarn free on Android." />
+  <meta property="og:title" content="WatchAndEarn — Watch Ads & Earn Real Rewards" />
+  <meta property="og:description" content="Earn PUBG UC and Free Fire Diamonds just by watching ads." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #7C3AED;
+      --primary-light: #A78BFA;
+      --accent: #F59E0B;
+      --bg: #0D0618;
+      --surface: #1A0B2E;
+      --surface2: #231040;
+      --text: #FFFFFF;
+      --text-muted: rgba(255,255,255,0.55);
+      --border: rgba(255,255,255,0.08);
+      --success: #10B981;
+      --danger: #EF4444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(13, 6, 24, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-weight: 800; font-size: 18px; color: #fff; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      background: var(--primary); color: #fff; border: none; padding: 10px 22px;
+      border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 720px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.4);
+      padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 600;
+      color: var(--primary-light); margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 900; line-height: 1.08; letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 span { color: var(--primary-light); }
+    .hero p {
+      font-size: 18px; color: var(--text-muted); max-width: 520px;
+      margin: 0 auto 40px; line-height: 1.7;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--primary); color: #fff; padding: 16px 32px;
+      border-radius: 14px; font-weight: 700; font-size: 16px;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 32px rgba(124,58,237,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,58,237,0.5); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.06); color: #fff; padding: 16px 32px;
+      border-radius: 14px; font-weight: 700; font-size: 16px; text-decoration: none;
+      border: 1px solid var(--border); transition: background .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+    .hero-stats {
+      display: flex; gap: 40px; justify-content: center; margin-top: 64px;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-size: 32px; font-weight: 900; color: var(--primary-light); }
+    .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    /* SECTION COMMON */
+    section { padding: 100px 40px; }
+    .section-tag {
+      display: inline-block;
+      background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.3);
+      color: var(--primary-light); padding: 4px 14px; border-radius: 100px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 16px;
+    }
+    .section-sub { color: var(--text-muted); font-size: 17px; max-width: 560px; line-height: 1.7; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* HOW IT WORKS */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px; margin-top: 56px;
+    }
+    .step-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px 24px; position: relative;
+      transition: transform .3s, border-color .3s;
+    }
+    .step-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.4); }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 20px;
+    }
+    .step-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .step-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* FEATURES */
+    .features-bg { background: var(--surface); }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px; margin-top: 56px;
+    }
+    .feature-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px 24px;
+      transition: border-color .3s;
+    }
+    .feature-card:hover { border-color: rgba(124,58,237,0.4); }
+    .feature-icon { font-size: 32px; margin-bottom: 16px; }
+    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* REWARDS */
+    .rewards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; margin-top: 56px;
+    }
+    .reward-card {
+      border-radius: 24px; padding: 32px; border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .reward-card.pubg { background: linear-gradient(135deg, rgba(245,166,35,0.1), rgba(13,6,24,0)); border-color: rgba(245,166,35,0.3); }
+    .reward-card.freefire { background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(13,6,24,0)); border-color: rgba(239,68,68,0.3); }
+    .reward-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .reward-card .subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+    .packages { display: flex; flex-direction: column; gap: 12px; }
+    .pkg {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 16px;
+    }
+    .pkg-label { font-weight: 700; font-size: 15px; }
+    .pkg-cost { font-size: 13px; color: var(--text-muted); }
+    .pkg-badge {
+      font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 100px;
+    }
+    .pubg .pkg-badge { background: rgba(245,166,35,0.2); color: #F5A623; }
+    .freefire .pkg-badge { background: rgba(239,68,68,0.2); color: #EF4444; }
+
+    /* CHECKIN */
+    .checkin-wrap {
+      background: var(--surface); border: 1px solid rgba(245,158,11,0.25);
+      border-radius: 24px; padding: 48px; margin-top: 56px;
+      display: flex; gap: 48px; align-items: center; flex-wrap: wrap;
+    }
+    .checkin-left { flex: 1; min-width: 260px; }
+    .checkin-left h3 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+    .checkin-left p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+    .checkin-days {
+      display: flex; gap: 8px; flex: 1; min-width: 280px; flex-wrap: wrap;
+    }
+    .day-chip {
+      flex: 1; min-width: 50px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 8px; text-align: center;
+    }
+    .day-chip.active {
+      background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.5);
+    }
+    .day-chip .emoji { font-size: 18px; }
+    .day-chip .coins { font-size: 11px; font-weight: 700; color: var(--accent); margin-top: 4px; }
+    .day-chip .day { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+    /* REFERRAL */
+    .referral-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(13,6,24,0));
+      border: 1px solid rgba(124,58,237,0.4);
+      border-radius: 24px; padding: 48px; text-align: center; margin-top: 56px;
+    }
+    .referral-box .big-emoji { font-size: 56px; margin-bottom: 20px; }
+    .referral-box h3 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+    .referral-box p { color: var(--text-muted); font-size: 16px; max-width: 480px; margin: 0 auto 28px; }
+    .referral-steps { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+    .ref-step { text-align: center; max-width: 160px; }
+    .ref-step .icon { font-size: 28px; margin-bottom: 10px; }
+    .ref-step p { font-size: 13px; color: var(--text-muted); }
+
+    /* CTA */
+    .cta-section {
+      text-align: center; padding: 100px 40px;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);
+    }
+    .cta-section h2 { font-size: clamp(28px, 5vw, 52px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 20px; }
+    .cta-section p { color: var(--text-muted); font-size: 17px; margin-bottom: 40px; }
+    .store-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #000; border: 1px solid rgba(255,255,255,0.15);
+      padding: 14px 28px; border-radius: 14px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    .store-badge:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+    .store-badge svg { width: 28px; height: 28px; }
+    .store-badge-text { text-align: left; }
+    .store-badge-text .small { font-size: 10px; color: rgba(255,255,255,0.6); }
+    .store-badge-text .big { font-size: 18px; font-weight: 700; color: #fff; }
+
+    /* FOOTER */
+    footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 40px; text-align: center;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 20px; }
+    .footer-logo img { width: 32px; height: 32px; border-radius: 8px; }
+    .footer-logo span { font-weight: 800; font-size: 16px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-size: 13px; color: var(--text-muted); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      section { padding: 70px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .checkin-wrap { padding: 28px; gap: 28px; }
+      .referral-box { padding: 32px 20px; }
+      .cta-section { padding: 70px 20px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="logo.png" alt="WatchAndEarn" />
+    <span>WatchAndEarn</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#rewards">Rewards</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+  </ul>
+  <a class="nav-cta" href="https://play.google.com/store/apps/details?id=com.watchandearnrewards.app" target="_blank">Download Free</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🎉 Free to Download — No Hidden Fees</div>
+    <h1>Watch Ads.<br /><span>Earn Real Rewards.</span></h1>
+    <p>Turn your free time into PUBG UC and Free Fire Diamonds. Watch short ads, collect coins, and redeem them for in-game currency — delivered within 24 hours.</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="https://play.google.com/store/apps/details?id=com.watchandearnrewards.app" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 0 2.17-.22l12.54-7.25-2.83-2.83-11.88 10.3zm-1.13-20.5C2 3.53 2 4.12 2 4.75v14.5c0 .63 0 1.22.05 1.49L14.38 12 2.05 3.26zM22.27 10.5l-2.9-1.67-3.17 3.17 3.17 3.17 2.93-1.69A2 2 0 0 0 22.27 10.5zM5.35.46A2 2 0 0 0 3.18.24L15.06 10.54l2.83-2.83L5.35.46z"/></svg>
+        Get it on Google Play
+      </a>
+      <a class="btn-secondary" href="#how-it-works">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">25🪙</div>
+        <div class="stat-label">Coins per ad</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2×</div>
+        <div class="stat-label">Bonus every 5th ad</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">200🪙</div>
+        <div class="stat-label">Daily check-in max</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">24h</div>
+        <div class="stat-label">Reward delivery</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title">Start earning in 3 simple steps</h2>
+    <p class="section-sub">No surveys, no tasks, no tricks. Just watch short ads and get rewarded.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">📲</div>
+        <h3>Download the App</h3>
+        <p>Install WatchAndEarn for free on Android. Sign up in seconds with your email.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">▶️</div>
+        <h3>Watch Ads</h3>
+        <p>Browse available missions and watch short video ads. Earn 25 coins per ad — 50 coins on every 5th!</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">🎮</div>
+        <h3>Redeem Rewards</h3>
+        <p>Cash out your coins for PUBG Mobile UC or Free Fire Diamonds. We send them to your game account within 24 hours.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">👥</div>
+        <h3>Invite Friends</h3>
+        <p>Share your referral code and earn 200 bonus coins for every friend who joins WatchAndEarn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-bg">
+  <div class="container">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">Everything you need to earn more</h2>
+    <p class="section-sub">Built with gamers in mind — every feature is designed to maximize your rewards.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>2× Bonus Ads</h3>
+        <p>Every 5th ad you watch gives you double coins — 50 instead of 25. Keep watching to hit the bonus!</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎁</div>
+        <h3>Daily Check-in</h3>
+        <p>Log in every day and watch an ad to claim growing rewards — up to 200 coins on Day 7 of your streak.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <h3>Daily Streak</h3>
+        <p>Build a streak by logging in every day. The longer your streak, the more consistent your rewards.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>Global Leaderboard</h3>
+        <p>Compete with earners worldwide. See your rank and climb to the top to show off your earnings.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Transaction History</h3>
+        <p>Track every coin you earn and spend. Full history of your ad rewards and redemptions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📶</div>
+        <h3>Works Offline</h3>
+        <p>Your coin balance is saved locally. Even if you lose connection, your earnings are never lost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REWARDS -->
+<section id="rewards">
+  <div class="container">
+    <div class="section-tag">Rewards</div>
+    <h2 class="section-title">Redeem for your favourite games</h2>
+    <p class="section-sub">Choose from PUBG Mobile UC or Free Fire Diamonds. More games coming soon.</p>
+    <div class="rewards-grid">
+      <!-- PUBG -->
+      <div class="reward-card pubg">
+        <h3>🎮 PUBG Mobile</h3>
+        <p class="subtitle">UC — Unknown Cash</p>
+        <div class="packages">
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">60 UC</div>
+              <div class="pkg-cost">5,000 coins</div>
+            </div>
+            <span class="pkg-badge">Popular</span>
+          </div>
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">325 UC</div>
+              <div class="pkg-cost">25,000 coins</div>
+            </div>
+            <span class="pkg-badge">Great value</span>
+          </div>
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">660 UC</div>
+              <div class="pkg-cost">45,000 coins</div>
+            </div>
+            <span class="pkg-badge">Best deal</span>
+          </div>
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">1800 UC</div>
+              <div class="pkg-cost">80,000 coins</div>
+            </div>
+            <span class="pkg-badge">Premium</span>
+          </div>
+        </div>
+      </div>
+      <!-- FREE FIRE -->
+      <div class="reward-card freefire">
+        <h3>🔥 Free Fire</h3>
+        <p class="subtitle">Diamonds</p>
+        <div class="packages">
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">100 Diamonds</div>
+              <div class="pkg-cost">8,000 coins</div>
+            </div>
+            <span class="pkg-badge">Starter</span>
+          </div>
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">310 Diamonds</div>
+              <div class="pkg-cost">20,000 coins</div>
+            </div>
+            <span class="pkg-badge">Popular</span>
+          </div>
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">520 Diamonds</div>
+              <div class="pkg-cost">38,000 coins</div>
+            </div>
+            <span class="pkg-badge">Best deal</span>
+          </div>
+          <div class="pkg">
+            <div>
+              <div class="pkg-label">1060 Diamonds</div>
+              <div class="pkg-cost">75,000 coins</div>
+            </div>
+            <span class="pkg-badge">Premium</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAILY CHECK-IN -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="checkin-wrap">
+      <div class="checkin-left">
+        <div class="section-tag">Daily Check-in</div>
+        <h3>Check in every day,<br />earn more every day</h3>
+        <p style="margin-top:12px;">Watch a short ad each day to claim your daily reward. Build a 7-day streak for the maximum bonus of 200 coins!</p>
+      </div>
+      <div class="checkin-days">
+        <div class="day-chip"><div class="emoji">🪙</div><div class="coins">50</div><div class="day">Day 1</div></div>
+        <div class="day-chip"><div class="emoji">🪙</div><div class="coins">75</div><div class="day">Day 2</div></div>
+        <div class="day-chip"><div class="emoji">🪙</div><div class="coins">100</div><div class="day">Day 3</div></div>
+        <div class="day-chip"><div class="emoji">🪙</div><div class="coins">125</div><div class="day">Day 4</div></div>
+        <div class="day-chip"><div class="emoji">🪙</div><div class="coins">150</div><div class="day">Day 5</div></div>
+        <div class="day-chip"><div class="emoji">🪙</div><div class="coins">175</div><div class="day">Day 6</div></div>
+        <div class="day-chip active"><div class="emoji">🎉</div><div class="coins">200</div><div class="day">Day 7</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERRAL -->
+<section style="padding-top: 0; padding-bottom: 100px;">
+  <div class="container">
+    <div class="referral-box">
+      <div class="big-emoji">🎁</div>
+      <h3>Invite Friends, Earn Together</h3>
+      <p>Share your unique invite code and earn 200 bonus coins for every friend who signs up. No limits — the more you share, the more you earn.</p>
+      <div class="referral-steps">
+        <div class="ref-step">
+          <div class="icon">📤</div>
+          <p>Share your unique referral code</p>
+        </div>
+        <div class="ref-step">
+          <div class="icon">👤</div>
+          <p>Friend signs up using your code</p>
+        </div>
+        <div class="ref-step">
+          <div class="icon">🪙</div>
+          <p>You get 200 coins instantly</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to start earning?</h2>
+  <p>Download WatchAndEarn for free and start turning ads into game rewards today.</p>
+  <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.watchandearnrewards.app" target="_blank">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 0 2.17-.22l12.54-7.25-2.83-2.83-11.88 10.3zm-1.13-20.5C2 3.53 2 4.12 2 4.75v14.5c0 .63 0 1.22.05 1.49L14.38 12 2.05 3.26zM22.27 10.5l-2.9-1.67-3.17 3.17 3.17 3.17 2.93-1.69A2 2 0 0 0 22.27 10.5zM5.35.46A2 2 0 0 0 3.18.24L15.06 10.54l2.83-2.83L5.35.46z"/></svg>
+    <div class="store-badge-text">
+      <div class="small">GET IT ON</div>
+      <div class="big">Google Play</div>
+    </div>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="WatchAndEarn" />
+    <span>WatchAndEarn</span>
+  </div>
+  <div class="footer-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#rewards">Rewards</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:af6781114@gmail.com">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 WatchAndEarn. All rights reserved. · 1000 coins = $1.00 USD equivalent</p>
+</footer>
+
+</body>
+</html>
