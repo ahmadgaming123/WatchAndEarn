@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Invited — WatchAndEarn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D0618;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 48px 36px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+    .logo {
+      width: 80px; height: 80px;
+      border-radius: 20px;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 40px rgba(139,92,246,0.5);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.35);
+      color: #C4B5FD;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+      line-height: 1.15;
+    }
+    .sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 15px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .code-box {
+      background: rgba(139,92,246,0.1);
+      border: 2px dashed rgba(139,92,246,0.4);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+    .code-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .code-value {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: #C4B5FD;
+    }
+    .clipboard-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 28px;
+    }
+    .clipboard-note.copied {
+      color: #34D399;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-bottom: 12px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(139,92,246,0.35);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      padding: 13px;
+    }
+    .perks {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 28px 0;
+      flex-wrap: wrap;
+    }
+    .perk {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .perk-icon { font-size: 24px; }
+    .perk-text { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 600; }
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 24px 0;
+    }
+    footer { margin-top: 32px; color: rgba(255,255,255,0.25); font-size: 12px; }
+    @media (max-width: 460px) {
+      .card { padding: 36px 22px; }
+      h1 { font-size: 26px; }
+      .code-value { font-size: 24px; letter-spacing: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <img class="logo" src="logo.png" alt="WatchAndEarn" />
+  <div class="badge">Special Invitation</div>
+  <h1>You've Been Invited!</h1>
+  <p class="sub">Your friend is sharing their earnings on WatchAndEarn. Watch ads and redeem PUBG UC &amp; Free Fire Diamonds for free.</p>
+
+  <div class="code-box">
+    <div class="code-label">Your Invite Code</div>
+    <div class="code-value" id="codeDisplay">——</div>
+  </div>
+  <div class="clipboard-note" id="clipNote">Copying code to clipboard…</div>
+
+  <div class="perks">
+    <div class="perk"><div class="perk-icon">🎁</div><div class="perk-text">200 Bonus Coins</div></div>
+    <div class="perk"><div class="perk-icon">🎮</div><div class="perk-text">PUBG UC</div></div>
+    <div class="perk"><div class="perk-icon">💎</div><div class="perk-text">Free Fire</div></div>
+  </div>
+
+  <a class="btn btn-primary" id="openAppBtn" href="#">Open in App</a>
+  <a class="btn btn-primary" id="playStoreBtn"
+     href="https://play.google.com/store/apps/details?id=com.watchandearnrewards.app"
+     target="_blank">Download from Play Store</a>
+  <a class="btn btn-secondary" href="index.html">Learn More</a>
+</div>
+
+<footer>© 2025 WatchAndEarn · <a href="privacy.html" style="color:inherit">Privacy Policy</a></footer>
+
+<script>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const code = (params.get('code') || '').toUpperCase().trim();
+
+    const codeDisplay = document.getElementById('codeDisplay');
+    const clipNote = document.getElementById('clipNote');
+    const openAppBtn = document.getElementById('openAppBtn');
+
+    if (code) {
+      codeDisplay.textContent = code;
+      openAppBtn.href = 'watchandearn://invite?code=' + encodeURIComponent(code);
+
+      // Copy code to clipboard (for deferred deep link when app is not yet installed)
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(function () {
+          clipNote.textContent = 'Code copied to clipboard — open app and it will auto-fill!';
+          clipNote.classList.add('copied');
+        }).catch(function () {
+          clipNote.textContent = 'Enter this code when you sign up in the app.';
+        });
+      } else {
+        // Fallback for older browsers
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = code;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.focus(); ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          clipNote.textContent = 'Code copied to clipboard!';
+          clipNote.classList.add('copied');
+        } catch (_) {
+          clipNote.textContent = 'Enter this code when you sign up in the app.';
+        }
+      }
+    } else {
+      codeDisplay.textContent = '——';
+      openAppBtn.style.display = 'none';
+      clipNote.textContent = 'Download the app and start earning coins!';
+    }
+  })();
+</script>
+
+</body>
+</html>
